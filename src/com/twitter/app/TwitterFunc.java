@@ -1,5 +1,13 @@
 package com.twitter.app;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import com.twitter.app.comparador.DataComparador;
+import com.twitter.app.comparador.NomeComparador;
+import com.twitter.app.entity.Tweet;
+
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.Status;
@@ -59,7 +67,6 @@ public class TwitterFunc {
 
 		return result.getCount();
 	}
-	
 
 	/***
 	 * Metodo responsavel por calcular quantidade de retweets que um tweet teve
@@ -129,16 +136,77 @@ public class TwitterFunc {
 		return retorno;
 	}
 
-	public QueryResult getListOrderName(String tweet) throws TwitterException {
+	/***
+	 * Metodo responsavel por retornar lista ordenada de nomes;
+	 * 
+	 * @param tweetQry, since, until
+	 * @return
+	 * @throws TwitterException
+	 */
+	public List<Tweet> getListOrderName(String tweetQry, String since, String until)
+			throws TwitterException {
+		List<Tweet> tweets = new ArrayList<Tweet>();
 		Twitter twitter = connTwitter();
-		Query query = new Query(tweet);
+		Query query = new Query(tweetQry);
+		
+		query.setSince(since);
+		query.setUntil(until);
+		
 		QueryResult result;
 
 		result = twitter.search(query);
 
-		return result;
+		while (result.hasNext()) {
+			query = result.nextQuery();
+
+			for (Status status : result.getTweets()) {
+				Tweet tweet = new Tweet();
+				tweet.setNome(status.getUser().getName().toString().toUpperCase());
+				// status.getUser().getScreenName();
+
+				tweets.add(tweet);
+			}
+			result = twitter.search(query);
+		}
+
+		NomeComparador nomeComparador = new NomeComparador();
+		Collections.sort(tweets, nomeComparador);
+
+		return tweets;
 	}
-	
+
+	/***
+	 * Metodo responsavel por retornar lista ordenada de datas;
+	 * @param tweetQry, since, until
+	 * @return
+	 * @throws TwitterException
+	 */
+	public List<Tweet> getListOrderDate(String tweetQry, String since, String until)
+			throws TwitterException {
+		List<Tweet> tweets = new ArrayList<Tweet>();
+		Twitter twitter = connTwitter();
+		Query query = new Query(tweetQry);
+		QueryResult result;
+
+		result = twitter.search(query);
+
+		while (result.hasNext()) {
+			query = result.nextQuery();
+
+			for (Status status : result.getTweets()) {
+				Tweet tweet = new Tweet();
+				tweet.setData(status.getCreatedAt());
+				
+				tweets.add(tweet);
+			}
+			result = twitter.search(query);
+		}
+		
+		DataComparador dataComparador = new DataComparador();
+		Collections.sort(tweets, dataComparador);
+
+		return tweets;
+	}
 
 	/***
 	 * Metodo para tweetar uma mensagem
