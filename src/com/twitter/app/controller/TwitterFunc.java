@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.twiiter.app.util.Constantes;
 import com.twitter.app.comparador.DataComparador;
 import com.twitter.app.comparador.NomeComparador;
 import com.twitter.app.entity.Tweet;
+import com.twitter.app.util.Constantes;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
