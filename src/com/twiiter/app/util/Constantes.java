@@ -1,4 +1,4 @@
-package com.twitter.app;
+package com.twiiter.app.util;
 
 public interface Constantes {
 	String token = "44257759-Bvttr0EXbinuhNjNKUp6hoWuFLMubCqlaTNTuthsW";

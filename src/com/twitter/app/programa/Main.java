@@ -1,9 +1,10 @@
-package com.twitter.app;
+package com.twitter.app.programa;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.twitter.app.controller.TwitterFunc;
 import com.twitter.app.entity.Tweet;
 
 import twitter4j.TwitterException;
