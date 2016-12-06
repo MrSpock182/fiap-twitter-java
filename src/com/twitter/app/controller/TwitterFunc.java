@@ -54,8 +54,7 @@ public class TwitterFunc {
 	 * @return Quantidade de tweets para determinada palavras
 	 * @throws TwitterException
 	 */
-	public Integer getQtdeTweets(String tweet, String since, String until)
-			throws TwitterException {
+	public Integer getQtdeTweets(String tweet, String since, String until) throws TwitterException {
 		Twitter twitter = connTwitter();
 		Query query = new Query(tweet);
 
@@ -66,7 +65,7 @@ public class TwitterFunc {
 
 		result = twitter.search(query);
 
-		return result.getCount();
+		return result.getTweets().size();
 	}
 
 	/***
@@ -79,8 +78,7 @@ public class TwitterFunc {
 	 * @return Quantidade de retweets para determinada tweet
 	 * @throws TwitterException
 	 */
-	public Integer getQtdeRT(String tweet, String since, String until)
-			throws TwitterException {
+	public Integer getQtdeRT(String tweet, String since, String until) throws TwitterException {
 		Twitter twitter = connTwitter();
 		Query query = new Query(tweet);
 		Integer retorno = 0;
@@ -113,8 +111,7 @@ public class TwitterFunc {
 	 * @return Quantidade de favoritos para determinada tweet
 	 * @throws TwitterException
 	 */
-	public Integer getQtdeFavoritos(String tweet, String since, String until)
-			throws TwitterException {
+	public Integer getQtdeFavoritos(String tweet, String since, String until) throws TwitterException {
 		Twitter twitter = connTwitter();
 		Query query = new Query(tweet);
 		Integer retorno = 0;
@@ -144,8 +141,7 @@ public class TwitterFunc {
 	 * @return
 	 * @throws TwitterException
 	 */
-	public List<Tweet> getListOrderName(String tweetQry, String since, String until)
-			throws TwitterException {
+	public List<Tweet> getListOrderName(String tweetQry, String since, String until) throws TwitterException {
 		List<Tweet> tweets = new ArrayList<Tweet>();
 		Twitter twitter = connTwitter();
 		Query query = new Query(tweetQry);
@@ -182,8 +178,7 @@ public class TwitterFunc {
 	 * @return
 	 * @throws TwitterException
 	 */
-	public List<Tweet> getListOrderDate(String tweetQry, String since, String until)
-			throws TwitterException {
+	public List<Tweet> getListOrderDate(String tweetQry, String since, String until) throws TwitterException {
 		List<Tweet> tweets = new ArrayList<Tweet>();
 		Twitter twitter = connTwitter();
 		Query query = new Query(tweetQry);

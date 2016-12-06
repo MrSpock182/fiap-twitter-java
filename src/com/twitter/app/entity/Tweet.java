@@ -1,12 +1,14 @@
 package com.twitter.app.entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Tweet implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String nome;
 	private Date data;
 
