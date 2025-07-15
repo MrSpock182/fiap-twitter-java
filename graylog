@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="WARN">
+    <Properties>
+        <Property name="graylog.host">udp:localhost</Property>
+        <Property name="graylog.port">12201</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} [%X{app_request_id}] [%X{app_txid}] [%X{app_origem}]- %msg%n" />
+        </Console>
+
+        <Gelf name="Gelf" host="${sys:graylog.host}"
+              port="${sys:graylog.port}" version="1.1" extractStackTrace="true"
+              filterStackTrace="false" originHost="%host{fqdn}">
+            <Field name="timestamp" pattern="%d{dd MMM yyyy HH:mm:ss,SSS}" />
+            <Field name="level" pattern="%level" />
+            <Field name="simpleClassName" pattern="%C{1}" />
+            <Field name="className" pattern="%C" />
+            <Field name="server" pattern="%host" />
+            <Field name="application" pattern="app-name" />
+            <Field name="tag" pattern="fretec" />
+            <Field name="app_request_id" pattern="%X{app_request_id}" />
+            <Field name="app_txid" pattern="%X{app_txid}" />
+            <Field name="app_origem" pattern="%X{app_origem}" />
+        </Gelf>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="Gelf" />
+        </Root>
+    </Loggers>
+</Configuration>
